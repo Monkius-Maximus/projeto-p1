@@ -40,12 +40,9 @@ while run:
     
     
     #desenhos
-    grupo_inimigos.draw(win)
-    
-    
     mundo.draw(win)
-    
     sidebar.draw(win)
+    grupo_inimigos.draw(win)
     if compra_torre.draw(win):
         print('torre comprada')
     #loop de eventos
