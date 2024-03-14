@@ -64,14 +64,20 @@ dados_spawn = [
 dados_inimigos = {
     'fraco': {
         'hp': 10,
-        'velocidade': 3
+        'velocidade': 3,
+        'dano': 1,
+        'valor': 1
     },
     'normal': {
         'hp': 15,
-        'velocidade': 4
+        'velocidade': 4,
+        'dano': 3,
+        'valor': 5
     },
     'forte': {
         'hp': 30,
-        'velocidade': 2 
+        'velocidade': 2,
+        'dano': 5,
+        'valor': 10
     },
 }

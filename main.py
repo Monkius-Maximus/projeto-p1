@@ -133,11 +133,11 @@ while run:
             if cancelar.draw(win):
                 aguardando_posicao_torre = False
     else:
-        pg.draw.rect(win, 'dark blue', (490, 260, 300, 200), border_radius = 30)
+        pg.draw.rect(win, 'black', (490, 260, 300, 200), border_radius = 30)
         if resultado_jogo == -1:
-            escrita_texto('GAME OVER', fonte_texto_grande, 'black', 500, 275)
+            escrita_texto('GAME OVER', fonte_texto_grande, 'yellow', 500, 275)
         elif resultado_jogo == 1:
-            escrita_texto('VITÓRIA!', fonte_texto_grande, 'black', 525, 275)
+            escrita_texto('VITÓRIA!', fonte_texto_grande, 'light green', 525, 275)
         if recomecar.draw(win):
                 game_over = False
                 inicio_jogo = False
