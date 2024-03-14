@@ -32,8 +32,8 @@ class Inimigo(pg.sprite.Sprite):
         #calculando distancia até o alvo
         dist = self.movimento.length()
         #checando se a distancia é menor que a velocidade de movimento
-        if dist >= self.velocidade:
-            self.pos += self.movimento.normalize() * self.velocidade
+        if dist >= (self.velocidade * mundo.velocidade_nivel):
+            self.pos += self.movimento.normalize() * (self.velocidade * mundo.velocidade_nivel)
         else:
             if dist!= 0:
                 self.pos += self.movimento.normalize() * dist

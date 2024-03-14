@@ -6,6 +6,7 @@ from random import shuffle
 class Mapa():
     def __init__(self, imagem_mapa):
         self.nivel = 1
+        self.velocidade_nivel = 1
         self.vida = VIDA
         self.dinheiro = DINHEIRO
         self.image = imagem_mapa

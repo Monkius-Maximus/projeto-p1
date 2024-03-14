@@ -35,6 +35,7 @@ imagem_inimigo = {
 imagem_compra_torre = pg.image.load('imagens/hud/botao_torre.png').convert_alpha()
 imagem_cancelar_compra = pg.image.load('imagens/hud/botao_cancelar_compra.png').convert_alpha()
 imagem_iniciar = pg.image.load('imagens/hud/botao_iniciar.png').convert_alpha()
+imagem_avancar = pg.image.load('imagens/hud/botao_avancar.png').convert_alpha()
 imagem_recomecar = pg.image.load('imagens/hud/botao_recomecar.png').convert_alpha()
 imagem_torre = pg.image.load('imagens/torre_1/torretas1_1.png').convert_alpha()
 torre_cursor = pg.image.load('imagens/torre_1/torretas1_1.png').convert_alpha()
@@ -52,6 +53,7 @@ grupo_torres = pg.sprite.Group()  # Grupo para torres
 compra_torre = Botão(SCREEN_HEIGHT + 30, 100, imagem_compra_torre, True)
 cancelar = Botão(SCREEN_HEIGHT+ 30, 200, imagem_cancelar_compra, True)
 iniciar = Botão(SCREEN_HEIGHT+ 30, 650, imagem_iniciar, True)
+avancar = Botão(SCREEN_HEIGHT+ 30, 550, imagem_avancar, False)
 recomecar = Botão(590, 335, imagem_recomecar, True)
 
 
@@ -92,14 +94,19 @@ while run:
     escrita_texto(str(mundo.vida), fonte_texto, 'red', 10, 5)
     escrita_texto(str(mundo.dinheiro), fonte_texto, 'dark green', 10, 30)
     escrita_texto(str(mundo.nivel), fonte_texto, 'black', 10, 55)
+    
     if game_over == False:
         #checando se o jogo começou
         if inicio_jogo == False:
             if iniciar.draw(win):
                 inicio_jogo = True
         else:
+            #opção de acelerar o jogo
+            mundo.velocidade_nivel = 1
+            if avancar.draw(win):
+                mundo.velocidade_nivel = 3
             #spawnando inimigos
-            if pg.time.get_ticks() - ultimo_spawn > spawn_cooldown:
+            if pg.time.get_ticks() - ultimo_spawn > (spawn_cooldown / mundo.velocidade_nivel):
                 if mundo.inimigos_spawnados < len(mundo.lista_inimigos):
                     tipo_inimigo = mundo.lista_inimigos[mundo.inimigos_spawnados]
                     inimigo = Inimigo(tipo_inimigo, caminho, imagem_inimigo)
