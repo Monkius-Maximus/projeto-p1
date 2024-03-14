@@ -3,6 +3,12 @@ SIDE_BAR = 160
 SCREEN_HEIGHT = 1280
 SCREEN_WIDTH = 720
 FPS = 60
+
+#jogo
+VIDA = 100
+DINHEIRO = 500
+RECOMPENSA_NIVEL_COMPLETO = 75
+ULTIMO_NIVEL = 1
 #coordenadas do caminho dos inimigos
 caminho = [
     (689, 0),
@@ -22,3 +28,5 @@ caminho = [
     (581, 199),
     (581, 0)
 ]
+
+spawn_cooldown = 300
