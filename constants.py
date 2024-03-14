@@ -8,7 +8,7 @@ FPS = 60
 VIDA = 100
 DINHEIRO = 500
 RECOMPENSA_NIVEL_COMPLETO = 75
-ULTIMO_NIVEL = 1
+ULTIMO_NIVEL = 10
 #coordenadas do caminho dos inimigos
 caminho = [
     (689, 0),
