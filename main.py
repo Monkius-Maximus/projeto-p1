@@ -23,8 +23,24 @@ fonte_texto_grande = pg.font.SysFont('Goudy Stout', 26)
 def escrita_texto(texto, fonte, cor, x, y):
     imagem = fonte.render(texto, True, cor)
     win.blit(imagem, (x, y))
-# carregando imagens
 
+def criar_torre(mouse_pos):
+    nova_torre = Torre(imagem_torre, mouse_pos) 
+    grupo_torres.add(nova_torre)
+    #verificar a posição do mouse na tela em relação ao lista caminho
+    #se estiver em cima do caminho, não permitir a criação da torre
+    for i in range(len(caminho) - 1):
+        largura_caminho = 20
+        p1, p2 = caminho[i], caminho[i+1]
+        dx, dy = p2[0] - p1[0], p2[1] - p1[1]
+        t = max(0, min(1, ((mouse_pos[0] - p1[0]) * dx + (mouse_pos[1] - p1[1]) * dy) / (dx ** 2 + dy ** 2)))
+        ponto_mais_proximo = [p1[0] + t * dx, p1[1] + t * dy]
+        dist = ((mouse_pos[0] - ponto_mais_proximo[0]) ** 2 + (mouse_pos[1] - ponto_mais_proximo[1]) ** 2) ** 0.5
+        if dist < largura_caminho:
+            grupo_torres.remove(nova_torre)
+            return
+            
+# carregando imagens
 imagem_mapa = pg.image.load('imagens/niveis/mapa.png').convert_alpha()
 image_side = pg.image.load('imagens/hud/madeira.jpg').convert_alpha()
 imagem_inimigo = {
@@ -63,9 +79,9 @@ ultimo_spawn = pg.time.get_ticks()
 inicio_jogo = False
 game_over = False
 resultado_jogo = 0 #-1 significa derrota e 1 significa vitoria
+
 # Loop principal do jogo
 run = True
-
 while run:
     
     clock.tick(FPS)
@@ -150,7 +166,7 @@ while run:
                 grupo_inimigos.empty()
                 grupo_torres.empty()
                 
-    # Verifica eventos
+    # Verifica eventos para comprar torre
     for event in pg.event.get():
         if event.type == pg.QUIT:
             run = False
@@ -161,10 +177,10 @@ while run:
                 # Define uma variável de controle para a criação da torre no próximo clique do botão direito
                 aguardando_posicao_torre = True
             if mouse_pos[0] < SCREEN_HEIGHT and mouse_pos[1] < SCREEN_WIDTH:
-                if event.button == 3 and aguardando_posicao_torre == True: 
+                if event.button == 1 and aguardando_posicao_torre == True: 
                     print('Clique com o botão direito')
-                    nova_torre = Torre(imagem_torre, event.pos) 
-                    grupo_torres.add(nova_torre) 
+                    criar_torre(mouse_pos)
+                    print(mouse_pos)
                     aguardando_posicao_torre = False 
 
     pg.display.update()
