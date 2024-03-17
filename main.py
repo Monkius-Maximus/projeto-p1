@@ -11,6 +11,8 @@ pg.init()
 # clock
 clock = pg.time.Clock()
 
+torre_selecionada = None
+
 # setup da janela do jogo
 win = pg.display.set_mode((SCREEN_HEIGHT + SIDE_BAR, SCREEN_WIDTH))
 pg.display.set_caption("Projeto P1")
@@ -63,7 +65,7 @@ mundo.processamento_inimigos()
 
 # criação de grupos
 grupo_inimigos = pg.sprite.Group()
-grupo_torres = pg.sprite.Group()  # Grupo para torres
+grupo_torres = pg.sprite.Group(grupo_inimigos)
 
 # criação dos botões
 compra_torre = Botão(SCREEN_HEIGHT + 30, 100, imagem_compra_torre, True)
@@ -98,18 +100,21 @@ while run:
             
         # Atualizações
         grupo_inimigos.update(mundo)
-        grupo_torres.update()
+        grupo_torres.update(grupo_inimigos)
         pg.display.update()
     
-    # Desenhos
+#Renderização
+    #mundo
     mundo.draw(win)
+    #hud
     sidebar.draw(win)
-    grupo_inimigos.draw(win)
-    grupo_torres.draw(win)
-    compra_torre.draw(win)
     escrita_texto(str(mundo.vida), fonte_texto, 'red', 10, 5)
     escrita_texto(str(mundo.dinheiro), fonte_texto, 'dark green', 10, 30)
     escrita_texto(str(mundo.nivel), fonte_texto, 'black', 10, 55)
+    #grupos
+    grupo_inimigos.draw(win)
+    grupo_torres.draw(win)
+    compra_torre.draw(win)
     
     if game_over == False:
         #checando se o jogo começou
