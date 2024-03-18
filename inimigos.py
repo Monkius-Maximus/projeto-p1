@@ -17,7 +17,7 @@ class Inimigo(pg.sprite.Sprite):
         self.image = imagens.get(tipo_inimigo)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
-        
+
     def update(self, mundo):
         self.andar(mundo)   
         self.checa_vida(mundo)

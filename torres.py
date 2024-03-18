@@ -1,6 +1,7 @@
 import pygame as pg
 import math
 from constants import *
+from constants import *
 
 class Torre(pg.sprite.Sprite):
     def __init__(self, sprite_sheet, position, mundo):
@@ -73,3 +74,13 @@ class Torre(pg.sprite.Sprite):
                     print('alvo selecionado')
                     self.alvo.vida -= DANO
                     break
+            #calcula a distância entre a torre e cada inimigo com base na posição x e y do retângulo da torre
+            x_dist = inimigo.pos[0] - self.rect.x
+            y_dist = inimigo.pos[1] - self.rect.y
+            #Distancia entre a torre e o inimigo
+            dist = math.sqrt(x_dist**2 + y_dist**2)
+            if dist < self.range:
+                self.alvo = inimigo
+                self.alvo.vida -= DANO
+                print('alvo selecionado')
+                break
