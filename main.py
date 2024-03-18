@@ -27,7 +27,7 @@ def escrita_texto(texto, fonte, cor, x, y):
     win.blit(imagem, (x, y))
 
 def criar_torre(mouse_pos):
-    nova_torre = Torre(imagem_torre, mouse_pos) 
+    nova_torre = Torre(imagem_torre, mouse_pos, mundo.velocidade_nivel) 
     grupo_torres.add(nova_torre)
     #verificar a posição do mouse na tela em relação ao lista caminho
     #se estiver em cima do caminho, não permitir a criação da torre
@@ -41,6 +41,11 @@ def criar_torre(mouse_pos):
         if dist < largura_caminho:
             grupo_torres.remove(nova_torre)
             return
+        elif mundo.dinheiro - preco < 0:
+            grupo_torres.remove(nova_torre)
+            print('dinheiro insuficiente')
+            return
+    mundo.dinheiro -= preco
             
 # carregando imagens
 imagem_mapa = pg.image.load('imagens/niveis/mapa.png').convert_alpha()
@@ -55,7 +60,7 @@ imagem_cancelar_compra = pg.image.load('imagens/hud/botao_cancelar_compra.png').
 imagem_iniciar = pg.image.load('imagens/hud/botao_iniciar.png').convert_alpha()
 imagem_avancar = pg.image.load('imagens/hud/botao_avancar.png').convert_alpha()
 imagem_recomecar = pg.image.load('imagens/hud/botao_recomecar.png').convert_alpha()
-imagem_torre = pg.image.load('imagens/torre_1/torretas1_1.png').convert_alpha()
+imagem_torre = pg.image.load('imagens/torre_1/torretas1.png').convert_alpha()
 torre_cursor = pg.image.load('imagens/torre_1/torretas1_1.png').convert_alpha()
 
 # mundo
@@ -82,6 +87,7 @@ inicio_jogo = False
 game_over = False
 resultado_jogo = 0 #-1 significa derrota e 1 significa vitoria
 
+
 # Loop principal do jogo
 run = True
 while run:
@@ -100,23 +106,32 @@ while run:
             
         # Atualizações
         grupo_inimigos.update(mundo)
-        grupo_torres.update(grupo_inimigos)
+        grupo_torres.update(grupo_inimigos, mundo)
         pg.display.update()
     
 #Renderização
     #mundo
     mundo.draw(win)
-    #hud
-    sidebar.draw(win)
-    escrita_texto(str(mundo.vida), fonte_texto, 'red', 10, 5)
-    escrita_texto(str(mundo.dinheiro), fonte_texto, 'dark green', 10, 30)
-    escrita_texto(str(mundo.nivel), fonte_texto, 'black', 10, 55)
-    #grupos
-    grupo_inimigos.draw(win)
-    grupo_torres.draw(win)
-    compra_torre.draw(win)
+    
     
     if game_over == False:
+        #checando se o player perdeu
+        if mundo.vida <= 0:
+            game_over = True
+            resultado_jogo = -1 #derrota
+        if mundo.nivel > ULTIMO_NIVEL:
+            game_over = True
+            resultado_jogo = 1 #vitoria
+        #hud
+        sidebar.draw(win)
+        escrita_texto(str(mundo.vida), fonte_texto, 'red', 10, 5)
+        escrita_texto(str(mundo.dinheiro), fonte_texto, 'dark green', 10, 30)
+        escrita_texto(str(mundo.nivel), fonte_texto, 'black', 10, 55)
+        #grupos
+        grupo_inimigos.draw(win)
+        for torre in grupo_torres:
+            torre.draw(win)
+        compra_torre.draw(win)
         #checando se o jogo começou
         if inicio_jogo == False:
             if iniciar.draw(win):
@@ -178,14 +193,12 @@ while run:
         if event.type == pg.MOUSEBUTTONDOWN: 
             mouse_pos = pg.mouse.get_pos()
             if event.button == 1 and compra_torre.rect.collidepoint(event.pos):  
-                print('Clique no botão de compra de torre')
                 # Define uma variável de controle para a criação da torre no próximo clique do botão direito
+                print('Clique com o botão esquerdo para posicionar')
                 aguardando_posicao_torre = True
             if mouse_pos[0] < SCREEN_HEIGHT and mouse_pos[1] < SCREEN_WIDTH:
                 if event.button == 1 and aguardando_posicao_torre == True: 
-                    print('Clique com o botão direito')
                     criar_torre(mouse_pos)
-                    print(mouse_pos)
                     aguardando_posicao_torre = False 
 
     pg.display.update()

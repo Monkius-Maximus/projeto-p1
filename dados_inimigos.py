@@ -66,18 +66,18 @@ dados_inimigos = {
         'hp': 10,
         'velocidade': 3,
         'dano': 1,
-        'valor': 1
+        'valor': 2
     },
     'normal': {
         'hp': 15,
-        'velocidade': 4,
+        'velocidade': 5,
         'dano': 3,
-        'valor': 5
+        'valor': 4
     },
     'forte': {
-        'hp': 30,
+        'hp': 35,
         'velocidade': 2,
         'dano': 5,
-        'valor': 10
+        'valor': 6
     },
 }

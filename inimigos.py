@@ -19,20 +19,25 @@ class Inimigo(pg.sprite.Sprite):
         self.rect.center = self.pos
         
     def update(self, mundo):
-        self.andar(mundo)    
+        self.andar(mundo)   
+        self.checa_vida(mundo)
     
     def andar(self, mundo):
         if self.target_caminho < len(self.caminhos):
             self.target = Vector2(self.caminhos[self.target_caminho])
             self.movimento = self.target - self.pos
-            """elif self.vida <= 0:
-            self.kill()
-            mundo.dinheiro += self.valor"""              #LEMBRAR DE TIRAR AS ASPAS QUANDO TORRES TIVEREM FUNCIONANDO
         else:
             #inimigo chegou ao fim do caminho
             self.kill()
             mundo.vida -= self.dano
             mundo.inimigos_passaram += 1
+    
+    def checa_vida(self, mundo):
+        if self.vida <= 0:
+            mundo.inimigos_mortos += 1
+            self.kill()
+            mundo.dinheiro += self.valor 
+        
         
             
         

@@ -5,10 +5,17 @@ SCREEN_WIDTH = 720
 FPS = 60
 
 #jogo
-VIDA = 100
+VIDA = 1000
 DINHEIRO = 500
 RECOMPENSA_NIVEL_COMPLETO = 75
 ULTIMO_NIVEL = 10
+
+#torres
+preco = 150
+DANO = 5
+etapas_animacao = 8
+delay_animacao = 15
+
 #coordenadas do caminho dos inimigos
 caminho = [
     (689, 0),
