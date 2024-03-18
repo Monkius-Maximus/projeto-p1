@@ -9,6 +9,12 @@ VIDA = 100
 DINHEIRO = 500
 RECOMPENSA_NIVEL_COMPLETO = 75
 ULTIMO_NIVEL = 10
+
+#torre
+preco = 150
+etapas_animacao = 8
+delay_animacao = 15
+DANO = 4
 #coordenadas do caminho dos inimigos
 caminho = [
     (689, 0),
@@ -31,5 +37,3 @@ caminho = [
 
 spawn_cooldown = 300
 
-#TORRES
-DANO = 1
