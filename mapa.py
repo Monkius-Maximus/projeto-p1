@@ -1,7 +1,7 @@
 import pygame as pg
 from dados_inimigos import dados_spawn
 from inimigos import *
-from constants import VIDA, DINHEIRO
+from constants import *
 from random import shuffle
 class Mapa():
     def __init__(self, imagem_mapa):
@@ -30,10 +30,11 @@ class Mapa():
         self.inimigos_spawnados = 0
             
     def processamento_inimigos(self):
-        inimigos = dados_spawn[self.nivel -1]
-        for tipos_inimigos in inimigos:
-            inimigos_pra_spawnar = inimigos[tipos_inimigos]
-            for inimigo in range(inimigos_pra_spawnar):
-                self.lista_inimigos.append(tipos_inimigos)
-        #randomizador de inimigos
-        shuffle(self.lista_inimigos)
+        if self.nivel < ULTIMO_NIVEL:
+            inimigos = dados_spawn[self.nivel -1]
+            for tipos_inimigos in inimigos:
+                inimigos_pra_spawnar = inimigos[tipos_inimigos]
+                for inimigo in range(inimigos_pra_spawnar):
+                    self.lista_inimigos.append(tipos_inimigos)
+            #randomizador de inimigos
+            shuffle(self.lista_inimigos)

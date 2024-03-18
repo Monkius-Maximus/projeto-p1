@@ -14,7 +14,7 @@ ULTIMO_NIVEL = 10
 preco = 150
 etapas_animacao = 8
 delay_animacao = 15
-DANO = 4
+DANO = 5
 #coordenadas do caminho dos inimigos
 caminho = [
     (689, 0),
